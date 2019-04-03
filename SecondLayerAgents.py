@@ -9,7 +9,7 @@ class SecondLayerAgent(Agent):
         self.events_table = []
 
     def custom_log(self, message):
-        self.log_info('Received topic: %s' % message[52])
+        self.log_info('Received topic: %s' % message[26]+"|"+message[52])
         self.events_table.append(message)
 
 

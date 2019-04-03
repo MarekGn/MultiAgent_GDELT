@@ -17,14 +17,15 @@ if __name__ == '__main__':
 
     # Inputs config
     topics = ['13', '14', '15', '16', '17', '18']
-    regions = ['POL', 'GER', 'UA', 'VE']
-    start_date = "2019 03 08"
+    regions = ['POL', 'GER', 'UA', 'VE', 'UK']
+    start_date = "2019 03 13"
     stop_date = "2019 03 14"
     events_limit = None
 
     # System deployment
     ns = run_nameserver()
-    gd_agent = run_agent('GDELT', base=AgentGDELT)
+    gd_agent = run_agent('GDELT', base=AgentGDELT, attributes=dict(date1=start_date, date2=stop_date, table="events",
+                                                                   output="pandas", limit=events_limit))
     first_layer_agents = FirstLayerAgent.create_first_layer_agents(topics)
     second_layer_agents = SecondLayerAgents.create_second_layer_agents(regions, first_layer_agents)
 
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     SecondLayerAgents.connect_agents(second_layer_agents, first_layer_agents)
 
     # Send messages
-    gd_agent.publish_gdelt(date1=start_date, date2=stop_date, table="events", output="pandas", limit=events_limit)
+    gd_agent.publish_gdelt()
     FirstLayerAgent.publish_events(first_layer_agents)
 
     # Server shutdown
