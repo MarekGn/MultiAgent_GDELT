@@ -13,24 +13,26 @@ class FirstLayerAgent(Agent):
         self.events_table.append(message)
 
 
-def create_first_layer_agents(start_topic=1, stop_topic=21):
-    agents = []
-    topics = ["%.2d" % i for i in range(start_topic, stop_topic)]
+def create_first_layer_agents(topics):
+    created_agents = []
     i = 1
     for topic in topics:
         name = 'agent1'+str(i)
         agent = run_agent(name, base=FirstLayerAgent, attributes=dict(topic=topic))
-        agents.append(agent)
-        print(Fore.GREEN + "First layer agent named: " + name + " CREATED" + Fore.RESET)
-        i = i + 1
-    return agents
+        created_agents.append(agent)
+        print(Fore.GREEN + "First layer agent named: " + name + " CREATED" + "  TOPIC: " + topic + Fore.RESET)
+        i += 1
+    return created_agents
 
 
-def connect_agents(agents, agent_to_adress):
+def connect_agents(agents, agent_to_address):
     for agent in agents:
-        agent.connect(agent_to_adress.addr('main'), handler={agent.get_attr('topic'): FirstLayerAgent.custom_log})
+        address = agent_to_address.bind('PUB', alias='main')
+        agent.connect(address, handler={agent.get_attr('topic'): FirstLayerAgent.custom_log})
 
 
-
-
-
+def publish_events(agents):
+    for agent in agents:
+        for message in agent.get_attr('events_table'):
+            topic = str(message[26])[:2] + '|' + str(message[52])
+            agent.send('main', message, topic=topic)

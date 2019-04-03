@@ -1,7 +1,6 @@
 import gdelt
 from osbrain import Agent
 from colorama import Fore
-import time
 
 
 class AgentGDELT(Agent):
@@ -15,11 +14,12 @@ class AgentGDELT(Agent):
         if(date2 is None):
             results = self.gd1.Search([date1], table=table, output=output)
             results = results.head(limit)
+            print(Fore.RED + "GDELT RESULTS DOWNLOADED" + Fore.RESET)
         else:
             results = self.gd1.Search([date1, date2], table=table, output=output)
             results = results.head(limit)
+            print(Fore.RED + "GDELT RESULTS DOWNLOADED" + Fore.RESET)
 
-        for each in results.values:
-            topic = str(each[26])[:2]
-            message = each
+        for message in results.values:
+            topic = str(message[26])[:2]
             self.send('main', message, topic=topic)
