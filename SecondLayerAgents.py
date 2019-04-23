@@ -61,7 +61,7 @@ def plot_countries_interaction(agents, root_codes, country_code, start_date, sto
         #save plots without overwriting
         i = 0
         filename = country_code + plot_code + 'country interaction'
-        while os.path.exists('{}{:d}.png'.format(filename, i)):
+        while os.path.exists('Figures/{}{:d}.png'.format(filename, i)):
             i += 1
         plt.savefig('Figures/{}{:d}.png'.format(filename, i))
 
