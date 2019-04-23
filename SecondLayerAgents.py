@@ -39,6 +39,8 @@ def connect_agents(agents, agents_to_address):
 
 
 def plot_countries_interaction(agents, root_codes, country_code, start_date, stop_date):
+    if not os.path.exists('Figures/'):
+        os.makedirs('Figures/')
     for plot_code in root_codes:
         fig, ax = plt.subplots()
         plt.rcdefaults()
@@ -52,13 +54,14 @@ def plot_countries_interaction(agents, root_codes, country_code, start_date, sto
         ax.bar(tuple(countries), tuple(number_events), align='center', color='blue')
         ax.set_xlabel('Countries')
         ax.set_ylabel('Number of events')
-        ax.set_title('\n'.join(wrap('Countries with the biggest interaction having a {} CAMEO code  with {} from {} to {}'
-                     .format(plot_code, country_code, stop_date, start_date))))
+        ax.set_title('\n'.join(wrap('COUNTRIES SELECTED BY {} \n Countries with the biggest interaction having a {} '
+                                    'CAMEO code  with {} from {} to {}'
+                     .format(root_codes, plot_code, country_code, stop_date, start_date))))
 
         #save plots without overwriting
         i = 0
         filename = country_code + plot_code + 'country interaction'
         while os.path.exists('{}{:d}.png'.format(filename, i)):
             i += 1
-        plt.savefig('figs\{}{:d}.png'.format(filename, i))
+        plt.savefig('Figures/{}{:d}.png'.format(filename, i))
 

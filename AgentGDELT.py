@@ -14,6 +14,8 @@ class AgentGDELT(Agent):
 
     def on_init(self):
         print(Fore.RED + "AgentGDELT Created" + Fore.RESET)
+        if not os.path.exists('GDELT_Data/'):
+            os.makedirs('GDELT_Data/tmp')
         self.gdelt_base_url = 'http://data.gdeltproject.org/events/'
         self.filtered_country_events = []
         self.country_code_occuring = []

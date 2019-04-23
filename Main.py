@@ -6,22 +6,23 @@ import SecondLayerAgents
 import sys
 
 if __name__ == '__main__':
-    # TOPICS#                                #PLOTS INFO#
-    # dostarczenie pomocy       07           # Country
-    # zagrożenie                13           # GoldsteinScale
-    # protest                   14           # ActorReligion1Code
-    # pokazanie siły            15           # RootCode
-    # ochłodzenie stosunków     16           #
-    # wymuszenie                17           #
-    # atak                      18           #
+    # TOPICS#
+    # dostarczenie pomocy       07
+    # zagrożenie                13
+    # protest                   14
+    # pokazanie siły            15
+    # ochłodzenie stosunków     16
+    # wymuszenie                17
+    # atak                      18
+    # walka                     19
+    # przemoc masowa            20
 
     ####################################################################################################################
     # Inputs config
-    start_date, stop_date = '1986', '1979'
-    most_common_countries = 5
-    country_code = 'ISR'
-    root_codes = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-                  '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+    start_date, stop_date = '2006', '1979'
+    most_common_countries = 20
+    country_code = 'PL'
+    root_codes = ['18', '19', '20']
 
     # System deployment
     ns = run_nameserver()
