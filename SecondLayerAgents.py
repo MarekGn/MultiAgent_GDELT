@@ -51,6 +51,9 @@ def plot_countries_interaction(agents, root_codes, country_code, start_date, sto
                 country_name = agent.get_attr('topic').split('|')[0]
                 countries.append(country_name)
                 number_events.append(len(agent.get_attr('events_table')))
+        c = zip(number_events, countries)
+        c = sorted(c, reverse=True)
+        number_events, countries = zip(*c)
         ax.bar(tuple(countries), tuple(number_events), align='center', color='blue')
         ax.set_xlabel('Countries')
         ax.set_ylabel('Number of events')
