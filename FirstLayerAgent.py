@@ -36,9 +36,9 @@ def connect_agents(agents, agent_to_address):
 def publish_events(agents, countrycode):
     for agent in agents:
         for message in agent.get_attr('filtered_country_events'):
-            if operator.itemgetter(37)(message.split('\t')) == countrycode:
-                topic = operator.itemgetter(44)(message.split('\t')) + '|' + operator.itemgetter(28)(message.split('\t'))
+            if operator.itemgetter(7)(message.split('\t')) == countrycode:
+                topic = operator.itemgetter(17)(message.split('\t')) + '|' + operator.itemgetter(28)(message.split('\t'))
                 agent.send('main', message, topic=topic)
             else:
-                topic = operator.itemgetter(37)(message.split('\t')) + '|' + operator.itemgetter(28)(message.split('\t'))
+                topic = operator.itemgetter(7)(message.split('\t')) + '|' + operator.itemgetter(28)(message.split('\t'))
                 agent.send('main', message, topic=topic)

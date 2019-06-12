@@ -36,7 +36,7 @@ class AgentGDELT(Agent):
 
         # separate out those links that begin with four digits
         file_list = [x for x in link_list if str.isdigit(x[0:4])]
-        filtered_file_list = [x for x in file_list if float(self.get_attr('date1')) >= float(x[0:4]) >= float(self.get_attr('date2'))]
+        filtered_file_list = [x for x in file_list if float(self.get_attr('date1')) <= float(x[0:4]) <= float(self.get_attr('date2'))]
 
         return filtered_file_list
 
@@ -64,19 +64,19 @@ class AgentGDELT(Agent):
                     for line in infile:
                         if (len(line.split('\t')) >= 51):
                             # extract lines with our interest country code
-                            if self.get_attr('country_code') == operator.itemgetter(44)(line.split('\t'))\
-                                    and operator.itemgetter(37)(line.split('\t')) != '' \
-                                    and operator.itemgetter(37)(line.split('\t')) != self.get_attr('country_code')\
+                            if self.get_attr('country_code') == operator.itemgetter(17)(line.split('\t'))\
+                                    and operator.itemgetter(7)(line.split('\t')) != '' \
+                                    and operator.itemgetter(7)(line.split('\t')) != self.get_attr('country_code')\
                                     and operator.itemgetter(28)(line.split('\t')) in self.get_attr('root_codes'):
                                 self.filtered_country_events.append(line)
-                                self.country_code_occuring.append(operator.itemgetter(37)(line.split('\t')))
+                                self.country_code_occuring.append(operator.itemgetter(7)(line.split('\t')))
 
-                            elif self.get_attr('country_code') == operator.itemgetter(37)(line.split('\t'))\
-                                    and operator.itemgetter(44)(line.split('\t')) != ''\
-                                    and operator.itemgetter(44)(line.split('\t')) != self.get_attr('country_code')\
+                            elif self.get_attr('country_code') == operator.itemgetter(7)(line.split('\t'))\
+                                    and operator.itemgetter(17)(line.split('\t')) != ''\
+                                    and operator.itemgetter(17)(line.split('\t')) != self.get_attr('country_code')\
                                     and operator.itemgetter(28)(line.split('\t')) in self.get_attr('root_codes'):
                                 self.filtered_country_events.append(line)
-                                self.country_code_occuring.append(operator.itemgetter(44)(line.split('\t')))
+                                self.country_code_occuring.append(operator.itemgetter(17)(line.split('\t')))
 
                 # delete the temporary file
                 os.remove(infile_name)
@@ -89,11 +89,11 @@ class AgentGDELT(Agent):
 
     def publish_gdelt(self):
         for message in self.filtered_country_events:
-            if operator.itemgetter(37)(message.split('\t')) == self.get_attr('country_code'):
-                topic = operator.itemgetter(44)(message.split('\t'))
+            if operator.itemgetter(7)(message.split('\t')) == self.get_attr('country_code'):
+                topic = operator.itemgetter(17)(message.split('\t'))
                 self.send('main', message, topic=topic)
             else:
-                topic = operator.itemgetter(37)(message.split('\t'))
+                topic = operator.itemgetter(7)(message.split('\t'))
                 self.send('main', message, topic=topic)
 
     def get_len_comm_countries(self):
