@@ -11,13 +11,14 @@ class Window(QDialog):
         self.top = 100
         self.left = 100
         self.width = 400
-        self.height = 300
+        self.height = 400
 
         self.start_year = None
         self.stop_year = None
         self.most_common_countries = None
         self.country_code = None
         self.root_codes = None
+        self.correlated_countries = None
 
         self.create_ui_components()
         self.init_window()
@@ -37,6 +38,7 @@ class Window(QDialog):
         self.create_most_common_countries_hboxlayout()
         self.create_country_code_hboxlayout()
         self.create_root_codes_hboxlayout()
+        self.create_correlated_countries_hboxlayout()
 
         self.create_buttons_start_stop_hboxlayout()
 
@@ -45,6 +47,7 @@ class Window(QDialog):
         vbox.addLayout(self.most_common_countries_hboxlayout)
         vbox.addLayout(self.country_code_hboxlayout)
         vbox.addLayout(self.root_codes_hboxlayout)
+        vbox.addLayout(self.correlated_countries_hboxlayout)
 
         vbox.addLayout(self.start_stop_hboxlayout)
 
@@ -71,10 +74,11 @@ class Window(QDialog):
         self.most_common_countries = self.most_common_countries_lineedit.text()
         self.country_code = self.country_code_lineedit.text()
         self.root_codes = self.root_codes_lineedit.text()
-
+        self.correlated_countries = self.correlated_countries_lineedit.text()
         self.check_quality_of_input()
 
-        agent_start(self.start_year, self.stop_year, self.most_common_countries, self.country_code, self.root_codes)
+        agent_start(self.start_year, self.stop_year, self.most_common_countries, self.country_code, self.root_codes,
+                    self.correlated_countries)
 
     def on_press_stop_button(self):
         sys.exit()
@@ -115,6 +119,15 @@ class Window(QDialog):
         self.country_code_hboxlayout.addWidget(self.country_code_lineedit)
         self.country_code_hboxlayout.addWidget(self.country_code_label)
 
+    def create_correlated_countries_hboxlayout(self):
+        self.correlated_countries_hboxlayout = QHBoxLayout()
+        self.correlated_countries_lineedit = QLineEdit(self)
+        self.correlated_countries_lineedit.setToolTip("<h2>Countries to correlate<h2>")
+        self.correlated_countries_label = QLabel("Considered countries to correlate (e.g. POL, USA, GER)")
+        self.correlated_countries_label.setMinimumWidth(300)
+        self.correlated_countries_hboxlayout.addWidget(self.correlated_countries_lineedit)
+        self.correlated_countries_hboxlayout.addWidget(self.correlated_countries_label)
+
     def create_root_codes_hboxlayout(self):
         self.root_codes_hboxlayout = QHBoxLayout()
         self.root_codes_lineedit = QLineEdit(self)
@@ -134,3 +147,7 @@ class Window(QDialog):
         self.root_codes = self.root_codes.replace('.', ' ')
         self.root_codes = self.root_codes.replace(',', ' ')
         self.root_codes = self.root_codes.split()
+        self.correlated_countries = str(self.correlated_countries)
+        self.correlated_countries = self.correlated_countries.replace('.', ' ')
+        self.correlated_countries = self.correlated_countries.replace(',', ' ')
+        self.correlated_countries = self.correlated_countries.split()
