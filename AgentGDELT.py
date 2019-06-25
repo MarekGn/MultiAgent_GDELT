@@ -103,6 +103,9 @@ class AgentGDELT(Agent):
                                 and operator.itemgetter(28)(line.split('\t')) in self.get_attr('root_codes'):
                             self.filtered_country_events.append(line)
                             self.country_code_occuring.append(operator.itemgetter(17)(line.split('\t')))
+            # delete the temporary file
+            os.remove(infile_name)
+
         for i in range(len(self.aggressive_cameo_df)):
             self.aggressive_cameo_df[i]['custom_coeff'] = self.aggressive_cameo_df[i]['numarticles'] * \
                                                      self.aggressive_cameo_df[i]['avgtone'] * self.aggressive_cameo_df[i][
@@ -110,8 +113,6 @@ class AgentGDELT(Agent):
                                                          'goldsteinscale']
             self.full_df[i]['custom_coeff'] = self.full_df[i]['numarticles'] * self.full_df[i]['avgtone'] * self.full_df[i][
                 'numsources'] * self.full_df[i]['goldsteinscale']
-        # delete the temporary file
-        os.remove(infile_name)
 
     def calculate_most_common_countries(self):
         occurs = Counter(self.country_code_occuring)

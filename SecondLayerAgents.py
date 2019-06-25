@@ -60,10 +60,10 @@ def connect_agents(agents, agents_to_address):
     for agent in agents:
         if agent.is_stats_agent():
             for address in addresses:
-                agent.connect(address, handler={agent.get_attr('topic'): SecondLayerAgent.stats_log()})
+                agent.connect(address, handler={agent.get_attr('topic'): SecondLayerAgent.stats_log})
         else:
             for address in addresses:
-                agent.connect(address, handler={agent.get_attr('topic'): SecondLayerAgent.custom_log()})
+                agent.connect(address, handler={agent.get_attr('topic'): SecondLayerAgent.custom_log})
 
 
 def plot_countries_interaction(agents, root_codes, country_code, start_date, stop_date):
@@ -136,7 +136,7 @@ def calculate_correlations_and_find_allies(agents, all_combinations_count, count
             ax.xaxis.set_major_locator(MultipleLocator(1))
             ax.yaxis.set_major_locator(MultipleLocator(1))
             i = 0
-            filename = kind_of_data + 'correlation' + ' '.join(countries)
+            filename = kind_of_data + 'correlation of' + scale + ' '.join(countries)
             while os.path.exists('Figures/{}{:d}.png'.format(filename, i)):
                 i += 1
             plt.savefig('Figures/{}{:d}.png'.format(filename, i))
@@ -199,9 +199,9 @@ def calculate_correlations_and_find_allies(agents, all_combinations_count, count
                             alliances.append(((m_feud[0], feud[0]), enemy))
 
         with open(f"""Results/Feuds_{kind_of_data}_{' '.join(countries)}.txt""", 'w', encoding='utf-8') as file:
-            file.write(feuds)
+            file.write(str(feuds))
         with open(f"""Results/Allies_{kind_of_data}_{' '.join(countries)}.txt""", 'w', encoding='utf-8') as file:
-            file.write(alliances)
+            file.write(str(alliances))
 
 
 def plot_trends(agents, countries):

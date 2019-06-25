@@ -31,10 +31,10 @@ def agent_start(start_date, stop_date, most_common_countries, country_code, root
 
     # Plot informations
     all_combinations_count = sum(list(range(1, len(correlated_countries))))
-    stats_agents = [a for a in first_layer_agents if a.get_attr('topic')[0] == AGENT_DATA['stats_agents_id']]
+    stats_agents = [a for a in second_layer_agents if a.get_attr('topic')[0] == AGENT_DATA['stats_agents_id']]
     trends_agents = [a for a in stats_agents if 'trend_line' in a.get_attr('topic')]
     diplomacy_agents = [a for a in stats_agents if 'diplomacy' in a.get_attr('topic')]
-    cameo_agents = [a for a in first_layer_agents if a.get_attr('topic')[0] != AGENT_DATA['stats_agents_id']]
+    cameo_agents = [a for a in second_layer_agents if a.get_attr('topic')[0] != AGENT_DATA['stats_agents_id']]
     SecondLayerAgents.plot_countries_interaction(cameo_agents, root_codes, country_code, start_date, stop_date)
     SecondLayerAgents.calculate_correlations_and_find_allies(diplomacy_agents, all_combinations_count, correlated_countries)
     SecondLayerAgents.plot_trends(trends_agents, correlated_countries)
