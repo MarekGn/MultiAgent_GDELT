@@ -29,8 +29,8 @@ class AgentGDELT(Agent):
         self.aggressive_cameo_df = [pd.DataFrame() for _ in range(self.all_combinations_count)]
         self.full_df = [pd.DataFrame() for _ in range(self.all_combinations_count)]
 
-        #self.download_files()
-        #self.extract_files()
+        self.download_files()
+        self.extract_files()
         self.filter_files()
         self.calculate_most_common_countries()
 
@@ -111,7 +111,7 @@ class AgentGDELT(Agent):
             self.full_df[i]['custom_coeff'] = self.full_df[i]['numarticles'] * self.full_df[i]['avgtone'] * self.full_df[i][
                 'numsources'] * self.full_df[i]['goldsteinscale']
         # delete the temporary file
-        # os.remove(infile_name)
+        os.remove(infile_name)
 
     def calculate_most_common_countries(self):
         occurs = Counter(self.country_code_occuring)
